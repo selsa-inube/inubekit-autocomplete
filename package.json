@@ -34,9 +34,9 @@
     "release": "git push --follow-tags && npm run auto release"
   },
   "dependencies": {
-    "@inubekit/foundations": "^5.1.0",
-    "@inubekit/textfield": "^2.7.0",
-    "@inubekit/select": "^5.0.0"
+    "@inubekit/foundations": "^5.6.0",
+    "@inubekit/select": "^5.0.0",
+    "@inubekit/textfield": "^2.7.0"
   },
   "peerDependencies": {
     "react": "^18.2.0",
