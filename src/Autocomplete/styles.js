@@ -10,4 +10,20 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export { StyledWrapper };
+const StyledClearIcon = styled.div`
+  position: relative;
+  top: -36px;
+  left: 213px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  & > figure {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+`;
+
+export { StyledClearIcon, StyledWrapper };
