@@ -1,8 +1,13 @@
 import { IOptionItem, OptionItem, OptionList } from "@inubekit/select";
 import { ITextfield, Textfield } from "@inubekit/textfield";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { StyledWrapper } from "./styles";
-import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
+import { StyledClearIcon, StyledWrapper } from "./styles";
+import {
+  MdAddCircle,
+  MdOutlineArrowDropDown,
+  MdOutlineArrowDropUp,
+} from "react-icons/md";
+import { Icon } from "@inubekit/icon";
 
 interface IAutocomplete extends Omit<ITextfield, "onChange" | "value"> {
   value: string;
@@ -106,6 +111,10 @@ const Autocomplete = (props: IAutocomplete) => {
     };
   }, [handleKeyDown]);
 
+  const handleClear = () => {
+    onChange("");
+  };
+
   return (
     <StyledWrapper ref={wrapperRef}>
       <Textfield
@@ -127,6 +136,16 @@ const Autocomplete = (props: IAutocomplete) => {
         onFocus={onFocus}
         onBlur={onBlur}
       />
+      {value && !disabled && (
+        <StyledClearIcon>
+          <Icon
+            appearance="gray"
+            icon={<MdAddCircle />}
+            size="20px"
+            onClick={handleClear}
+          />
+        </StyledClearIcon>
+      )}
       {showOptions && filteredOptions.length > 0 && (
         <OptionList onClick={handleOptionClick}>
           {filteredOptions.map((option) => (
