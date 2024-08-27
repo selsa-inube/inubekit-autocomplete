@@ -1,39 +1,38 @@
-import { IOptionItem } from "@inubekit/select";
 import { IAutocomplete } from "..";
-import { parameters, props } from "../props";
-import { AutocompleteController } from "./Autocomplete.Controller";
+
+import { props, parameters } from "../props";
+import { AutocompleteController } from "./Autocomplete.controller";
 
 const story = {
   title: "Inputs/Autocomplete",
-  component: AutocompleteController,
+  component: [AutocompleteController],
   parameters,
-  argTypes: props,
+  argTypes: {
+    ...props,
+  },
 };
 
-const optionsMock: IOptionItem[] = [
-  { id: "1", label: "Option 1" },
-  { id: "2", label: "Option 2" },
-  { id: "3", label: "Option 3" },
-  { id: "4", label: "Option 4" },
+const optionsMock = [
+  { id: "op1", label: "Option 1", value: "option-1" },
+  { id: "op2", label: "Option 2", value: "option-2" },
+  { id: "op3", label: "Option 3", value: "option-3" },
+  { id: "op4", label: "Option 4", value: "option-4" },
 ];
 
 const Default = (args: IAutocomplete) => <AutocompleteController {...args} />;
 
 Default.args = {
-  label: "Search",
+  label: "Country",
   name: "autocomplete",
   id: "autocomplete",
-  placeholder: "Ingresa un valor...",
+  placeholder: "Select your country...",
+  value: "",
+  disabled: false,
   options: optionsMock,
   required: false,
-  disabled: false,
-  fullwidth: false,
   size: "wide",
-  message: "",
-  status: "pending",
-  iconBefore: "",
-  iconAfter: "",
+  fullwidth: false,
 };
 
-export { Default };
 export default story;
+export { Default };
