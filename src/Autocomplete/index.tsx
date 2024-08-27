@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Select, IOption, ISelect } from "@inubekit/select";
-import { StyledWrapper } from "./styles";
 
 interface IAutocomplete extends Omit<ISelect, "onChange" | "value"> {
   value: string;
@@ -53,28 +52,26 @@ const Autocomplete = (props: IAutocomplete) => {
   };
 
   return (
-    <StyledWrapper>
-      <Select
-        label={label}
-        name={name}
-        id={id}
-        placeholder={placeholder}
-        disabled={disabled}
-        value={value}
-        onChange={interceptChange}
-        options={filteredOptions}
-        required={required}
-        size={size}
-        fullwidth={fullwidth}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        readonly={false}
-        showOptions={showOptions}
-        onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) =>
-          handleFilter((e.target as HTMLInputElement).value)
-        }
-      />
-    </StyledWrapper>
+    <Select
+      label={label}
+      name={name}
+      id={id}
+      placeholder={placeholder}
+      disabled={disabled}
+      value={value}
+      onChange={interceptChange}
+      options={filteredOptions}
+      required={required}
+      size={size}
+      fullwidth={fullwidth}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      readonly={false}
+      showOptions={showOptions}
+      onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) =>
+        handleFilter((e.target as HTMLInputElement).value)
+      }
+    />
   );
 };
 
