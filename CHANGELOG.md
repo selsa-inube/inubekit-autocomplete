@@ -1,3 +1,15 @@
+# v1.7.0 (Tue Aug 27 2024)
+
+#### 🚀 Enhancement
+
+- Update dependencies and adjust `onChange` handling [#8](https://github.com/selsa-inube/inubekit-autocomplete/pull/8) ([@cmarin001](https://github.com/cmarin001))
+
+#### Authors: 1
+
+- Cesar Marin Alfonso ([@cmarin001](https://github.com/cmarin001))
+
+---
+
 # v1.6.0 (Wed Aug 21 2024)
 
 #### 🚀 Enhancement
