@@ -1,19 +1,11 @@
-import { IOptionItem, OptionItem, OptionList } from "@inubekit/select";
-import { ITextfield, Textfield } from "@inubekit/textfield";
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { StyledClearIcon, StyledWrapper } from "./styles";
-import {
-  MdAddCircle,
-  MdOutlineArrowDropDown,
-  MdOutlineArrowDropUp,
-} from "react-icons/md";
-import { Icon } from "@inubekit/icon";
+import { useState } from "react";
+import { Select, IOption, ISelect } from "@inubekit/select";
+import { StyledWrapper } from "./styles";
 
-interface IAutocomplete extends Omit<ITextfield, "onChange" | "value"> {
+interface IAutocomplete extends Omit<ISelect, "onChange" | "value"> {
   value: string;
-  onChange: (value: string) => void;
-  options: IOptionItem[];
-  onOptionSelect: (selectedOption: IOptionItem) => void;
+  onChange: (name: string, value: string) => void;
+  options: IOption[];
 }
 
 const Autocomplete = (props: IAutocomplete) => {
@@ -25,134 +17,63 @@ const Autocomplete = (props: IAutocomplete) => {
     disabled = false,
     value,
     onChange,
-    options,
-    onOptionSelect,
+    options = [],
     required,
-    status,
-    message,
     size,
     fullwidth,
     onFocus,
     onBlur,
   } = props;
 
-  const [filteredOptions, setFilteredOptions] = useState<IOptionItem[]>([]);
+  const [filteredOptions, setFilteredOptions] = useState(options);
   const [showOptions, setShowOptions] = useState(false);
-  const [activeOption, setActiveOption] = useState(0);
 
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (value) {
-      const filtered = options.filter((option) =>
-        option.label.toLowerCase().includes(value.toLowerCase()),
+  const handleFilter = (newValue: string) => {
+    if (newValue) {
+      const normalizedValue = newValue.trim().toLowerCase();
+      const filtered = options.filter(
+        (option) =>
+          option.value && option.value.toLowerCase().includes(normalizedValue),
       );
       setFilteredOptions(filtered);
-      setShowOptions(true);
+      setShowOptions(filtered.length > 0);
     } else {
-      setFilteredOptions([]);
+      setFilteredOptions(options);
       setShowOptions(false);
     }
-  }, [value, options]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      onChange(event.target.value);
-      setActiveOption(0);
-    } catch (error) {
-      throw new Error(
-        error instanceof Error ? error.message : "An unknown error occurred",
-      );
-    }
   };
 
-  const handleOptionClick = (optionId: React.ChangeEvent<HTMLInputElement>) => {
+  const interceptChange = (name: string, value: string) => {
+    setShowOptions(false);
     try {
-      const selectedOption = filteredOptions.find(
-        (option) => option.id === optionId.target.id,
-      );
-      if (selectedOption) {
-        onOptionSelect(selectedOption);
-        setShowOptions(false);
-      }
+      onChange && onChange(name, value);
     } catch (error) {
-      throw new Error(
-        error instanceof Error ? error.message : "An unknown error occurred",
-      );
+      console.error(`Error when changing value using callback. ${error}`);
     }
-  };
-
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        if (filteredOptions[activeOption]) {
-          onOptionSelect(filteredOptions[activeOption]);
-        }
-        setShowOptions(false);
-      } else if (event.key === "ArrowUp") {
-        if (activeOption > 0) setActiveOption(activeOption - 1);
-      } else if (event.key === "ArrowDown") {
-        if (activeOption < filteredOptions.length - 1)
-          setActiveOption(activeOption + 1);
-      }
-    },
-    [activeOption, filteredOptions, onOptionSelect],
-  );
-
-  useEffect(() => {
-    const wrapperElement = wrapperRef.current;
-    if (wrapperElement) {
-      wrapperElement.addEventListener("keydown", handleKeyDown);
-    }
-    return () => {
-      if (wrapperElement) {
-        wrapperElement.removeEventListener("keydown", handleKeyDown);
-      }
-    };
-  }, [handleKeyDown]);
-
-  const handleClear = () => {
-    onChange("");
   };
 
   return (
-    <StyledWrapper ref={wrapperRef}>
-      <Textfield
+    <StyledWrapper>
+      <Select
         label={label}
         name={name}
         id={id}
         placeholder={placeholder}
         disabled={disabled}
         value={value}
-        onChange={handleChange}
-        iconAfter={
-          showOptions ? <MdOutlineArrowDropUp /> : <MdOutlineArrowDropDown />
-        }
+        onChange={interceptChange}
+        options={filteredOptions}
         required={required}
-        status={status}
-        message={message}
         size={size}
         fullwidth={fullwidth}
         onFocus={onFocus}
         onBlur={onBlur}
+        readonly={false}
+        showOptions={showOptions}
+        onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) =>
+          handleFilter((e.target as HTMLInputElement).value)
+        }
       />
-      {value && !disabled && (
-        <StyledClearIcon>
-          <Icon
-            appearance="gray"
-            icon={<MdAddCircle />}
-            size="20px"
-            onClick={handleClear}
-          />
-        </StyledClearIcon>
-      )}
-      {showOptions && filteredOptions.length > 0 && (
-        <OptionList onClick={handleOptionClick}>
-          {filteredOptions.map((option) => (
-            <OptionItem key={option.id} id={option.id} label={option.label} />
-          ))}
-        </OptionList>
-      )}
     </StyledWrapper>
   );
 };
