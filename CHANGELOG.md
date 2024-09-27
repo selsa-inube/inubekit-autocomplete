@@ -1,3 +1,19 @@
+# v1.12.1 (Fri Sep 27 2024)
+
+#### ⚠️ Pushed to `main`
+
+- Update Autocomplete.stories.tsx ([@cmarin001](https://github.com/cmarin001))
+
+#### 🔩 Dependency Updates
+
+- Update Icon, Label, and Text dependencies to improve disabled readability [#14](https://github.com/selsa-inube/inubekit-autocomplete/pull/14) ([@cmarin001](https://github.com/cmarin001))
+
+#### Authors: 1
+
+- Cesar Marin Alfonso ([@cmarin001](https://github.com/cmarin001))
+
+---
+
 # v1.12.0 (Tue Sep 03 2024)
 
 #### 🚀 Enhancement
