@@ -25,7 +25,7 @@ Default.args = {
   label: "Country",
   name: "autocomplete",
   id: "autocomplete",
-  placeholder: "Select your country...",
+  placeholder: "Please type something...",
   value: "",
   disabled: false,
   options: optionsMock,
