@@ -1,3 +1,15 @@
+# v1.12.2 (Mon Sep 30 2024)
+
+#### ⚠️ Pushed to `main`
+
+- chore: update dependencies ([@cmarin001](https://github.com/cmarin001))
+
+#### Authors: 1
+
+- Cesar Marin Alfonso ([@cmarin001](https://github.com/cmarin001))
+
+---
+
 # v1.12.1 (Fri Sep 27 2024)
 
 #### ⚠️ Pushed to `main`
